@@ -1,0 +1,40 @@
+{
+  "name": "nestjs-stock-options",
+  "version": "0.0.0",
+  "description": "NestJS module for common operations with stock options",
+  "main": "dist/index",
+  "types": "dist/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VBetsun/nestjs-stock-options.git"
+  },
+  "keywords": [
+    "NestJS",
+    "stock options"
+  ],
+  "author": "Vlad Betsun  <vlad.betcun@gmail.com>",
+  "contributors": [
+    {
+      "name": "Vlad Betsun",
+      "email": "vlad.betcun@gmail.com",
+      "author": true
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VBetsun/nestjs-stock-options/issues"
+  },
+  "homepage": "https://github.com/VBetsun/nestjs-stock-options#readme",
+  "dependencies": {
+    "@nestjs/common": "^7.6.17",
+    "rxjs": "^6.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.2"
+  }
+}

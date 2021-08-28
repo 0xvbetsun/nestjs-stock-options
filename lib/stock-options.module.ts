@@ -1,9 +1,9 @@
-import { DynamicModule, Module } from "@nestjs/common";
-import { StockOptionsService } from "./stock-options.service";
+import { DynamicModule, Module } from '@nestjs/common';
+import { StockOptionsService } from './stock-options.service';
 
 @Module({})
 export class StockOptionsModule {
-  static forRoot(): DynamicModule {
+  static register(): DynamicModule {
     const providers = [
       {
         provide: StockOptionsService,
@@ -12,9 +12,9 @@ export class StockOptionsModule {
     ];
 
     return {
-      providers: providers,
-      exports: providers,
       module: StockOptionsModule,
+      providers,
+      exports: providers,
     };
   }
 }

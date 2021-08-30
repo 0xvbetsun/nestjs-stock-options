@@ -20,7 +20,7 @@ npm install --save nestjs-stock-options
 The simplest way to use `nestjs-stock-options` is to use `StockOptionsModule.register`
 
 ```typescript
-import { Module } from '@nestjs-common';
+import { Module } from '@nestjs/common';
 import { StockOptionsModule } from 'nestjs-stock-options';
 
 @Module({

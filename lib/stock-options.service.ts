@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { parser, round } from 'mathjs';
+import { ToPrecision } from './to-precision';
 
 // used for min/max normal distribution
 const MIN_Z_SCORE = -8;
@@ -10,6 +10,7 @@ export class StockOptionsService {
   /**
    * computes the fair value of the call based on the knowns and assumed volatility (sigma)
    */
+  @ToPrecision()
   priceCall(
     underlying: number,
     strike: number,
@@ -19,24 +20,36 @@ export class StockOptionsService {
     dividend = 0,
   ): number {
     const d1 = this.dOne(underlying, strike, time, interest, sigma, dividend);
-    const discountedUnderlying = parser().evaluate(
-      `exp(-1 * ${dividend} * ${time}) * ${underlying}`,
-    );
-    const probabilityWeightedValueOfBeingExercised = parser().evaluate(
-      `${discountedUnderlying} * ${this.normSDist(d1)}`,
-    );
-    const d2 = parser().evaluate(`${d1} - ${sigma} * sqrt(${time})`);
-    const discountedStrike = parser().evaluate(`exp(-1 * ${interest} * ${time}) * ${strike}`);
-    const probabilityWeightedValueOfDiscountedStrike = parser().evaluate(
-      `${discountedStrike} * ${this.normSDist(d2)}`,
-    );
+    const discountedUnderlying = Math.exp(-1 * dividend * time) * underlying;
+    const probabilityWeightedValueOfBeingExercised = discountedUnderlying * this.normSDist(d1);
+    const d2 = d1 - sigma * Math.sqrt(time);
+    const discountedStrike = Math.exp(-1 * interest * time) * strike;
+    const probabilityWeightedValueOfDiscountedStrike = discountedStrike * this.normSDist(d2);
 
-    return round(
-      parser().evaluate(
-        `${probabilityWeightedValueOfBeingExercised} - ${probabilityWeightedValueOfDiscountedStrike}`,
-      ),
-      4,
-    );
+    return probabilityWeightedValueOfBeingExercised - probabilityWeightedValueOfDiscountedStrike;
+  }
+
+  /**
+   * computes the fair value of the put based on the knowns and assumed volatility (sigma)
+   */
+  @ToPrecision()
+  pricePut(
+    underlying: number,
+    strike: number,
+    time: number,
+    interest: number,
+    sigma: number,
+    dividend = 0,
+  ): number {
+    const d2 = this.dTwo(underlying, strike, time, interest, sigma, dividend);
+
+    const discountedStrike = strike * Math.exp(-1 * interest * time);
+    const probabiltityWeightedValueOfDiscountedStrike = discountedStrike * this.normSDist(-1 * d2);
+    const d1 = d2 + sigma * Math.sqrt(time);
+    const discountedUnderlying = underlying * Math.exp(-1 * dividend * time);
+    const probabilityWeightedValueOfBeingExercised = discountedUnderlying * this.normSDist(-1 * d1);
+
+    return probabiltityWeightedValueOfDiscountedStrike - probabilityWeightedValueOfBeingExercised;
   }
 
   /**
@@ -50,12 +63,11 @@ export class StockOptionsService {
     sigma: number,
     dividend: number,
   ): number {
-    const numerator = parser().evaluate(
-      `log(${underlying} / ${strike}) + (${interest} - ${dividend} + 0.5 * ${sigma}^2) * ${time}`,
-    );
-    const denominator = parser().evaluate(`${sigma} * sqrt(${time})`);
+    const numerator =
+      Math.log(underlying / strike) + (interest - dividend + 0.5 * sigma ** 2) * time;
+    const denominator = sigma * Math.sqrt(time);
 
-    return parser().evaluate(`${numerator} / ${denominator}`);
+    return numerator / denominator;
   }
 
   /**
@@ -69,16 +81,7 @@ export class StockOptionsService {
     sigma: number,
     dividend: number,
   ) {
-    return parser().evaluate(
-      `${this.dOne(
-        underlying,
-        strike,
-        time,
-        interest,
-        sigma,
-        dividend,
-      )} - ${sigma} * sqrt(${time})`,
-    );
+    return this.dOne(underlying, strike, time, interest, sigma, dividend) - sigma * Math.sqrt(time);
   }
 
   /**
@@ -99,20 +102,20 @@ export class StockOptionsService {
 
     while (sum + term !== sum) {
       sum += term;
-      term = parser().evaluate(`${term} * ${z}^2 / ${i}`);
+      term = (term * z ** 2) / i;
       i += 2;
     }
 
-    return parser().evaluate(`0.5 + ${sum} * ${this.phi(z)}`);
+    return 0.5 + sum * this.phi(z);
   }
 
   /**
    * Standard Gaussian pdf
    */
   private phi(x: number): number {
-    const numerator = parser().evaluate(`exp(-1 * ${x}^2 / 2)`);
-    const denominator = parser().evaluate('sqrt(2 * PI)');
+    const numerator = Math.exp((-1 * x ** 2) / 2);
+    const denominator = Math.sqrt(2 * Math.PI);
 
-    return parser().evaluate(`${numerator} / ${denominator}`);
+    return numerator / denominator;
   }
 }

@@ -39,9 +39,7 @@
     "url": "https://github.com/VBetsun/nestjs-stock-options/issues"
   },
   "homepage": "https://github.com/VBetsun/nestjs-stock-options#readme",
-  "dependencies": {
-    "mathjs": "^9.4.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-angular": "^12.1.4",
@@ -49,7 +47,6 @@
     "@nestjs/core": "^8.0.6",
     "@nestjs/testing": "^8.0.6",
     "@types/jest": "^27.0.1",
-    "@types/mathjs": "^9.4.2",
     "@types/node": "^16.7.4",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",

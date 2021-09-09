@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
     "declaration": true,
     "strict": true,
     "removeComments": true,
@@ -11,6 +12,8 @@
     "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "./lib",
+    "esModuleInterop": true,
+    "allowJs": true,
     "skipLibCheck": true
   },
   "include": ["lib/**/*"],

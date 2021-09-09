@@ -20,13 +20,13 @@ describe('StockOptionsService', () => {
 
   describe('should correctly count call price', () => {
     it('without dividends', () => {
-      const price = 5.0157;
+      const price = 5.0171;
 
       expect(service.priceCall(underlying, strike, time, interest, sigma)).toBe(price);
     });
 
     it('with dividends', () => {
-      const price = 4.769;
+      const price = 4.7704;
 
       expect(service.priceCall(underlying, strike, time, interest, sigma, dividend)).toBe(price);
     });
@@ -34,13 +34,13 @@ describe('StockOptionsService', () => {
 
   describe('should correctly count put price', () => {
     it('without dividends', () => {
-      const price = 2.0095;
+      const price = 2.0109;
 
       expect(service.pricePut(underlying, strike, time, interest, sigma)).toBe(price);
     });
 
     it('with dividends', () => {
-      const price = 2.1367;
+      const price = 2.138;
 
       expect(service.pricePut(underlying, strike, time, interest, sigma, dividend)).toBe(price);
     });

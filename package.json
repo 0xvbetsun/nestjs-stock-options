@@ -1,6 +1,6 @@
 {
   "name": "nestjs-stock-options",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "NestJS module for common operations with stock options",
   "main": "dist/index",
   "types": "dist/index",
@@ -12,7 +12,7 @@
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "format": "prettier --write \"**/*.ts\"",
     "lint": "eslint 'lib/**/*.ts' --fix",
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "prepublish:npm": "npm run build",
     "publish:npm": "npm publish --access public",
     "prerelease": "npm run build",
@@ -39,7 +39,9 @@
     "url": "https://github.com/VBetsun/nestjs-stock-options/issues"
   },
   "homepage": "https://github.com/VBetsun/nestjs-stock-options#readme",
-  "dependencies": {},
+  "dependencies": {
+    "stock-options-calculator": "^0.1.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-angular": "^12.1.4",
@@ -50,6 +52,7 @@
     "@types/node": "^16.7.4",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
@@ -61,7 +64,7 @@
     "release-it": "^14.11.5",
     "rimraf": "^3.0.2",
     "rxjs": "^7.3.0",
-    "ts-jest": "^27.0.5",
+    "ts-jest": "^27.0.0-next.12",
     "typescript": "^4.4.2"
   },
   "peerDependencies": {
@@ -76,6 +79,14 @@
     ]
   },
   "jest": {
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    },
     "moduleFileExtensions": [
       "js",
       "json",

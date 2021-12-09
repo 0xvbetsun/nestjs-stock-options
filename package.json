@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/VBetsun/nestjs-stock-options#readme",
   "dependencies": {
-    "stock-options-calculator": "^0.1.0"
+    "stock-options-calculator": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",

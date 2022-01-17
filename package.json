@@ -1,6 +1,6 @@
 {
   "name": "nestjs-stock-options",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "NestJS module for common operations with stock options",
   "main": "dist/index",
   "types": "dist/index",

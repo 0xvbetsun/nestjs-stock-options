@@ -43,7 +43,7 @@
     "stock-options-calculator": "^1.0.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
+    "@commitlint/cli": "^19.2.2",
     "@commitlint/config-angular": "^19.1.0",
     "@nestjs/common": "^8.0.6",
     "@nestjs/core": "^8.0.6",
